@@ -12,8 +12,8 @@ const createAccountBodySchema = z.object({
 
 type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
 
-@UsePipes(new ZodValidationPipe(createAccountBodySchema))
 @Controller('/accounts')
+@UsePipes(new ZodValidationPipe(createAccountBodySchema))
 export class CreateAccountController {
   constructor(private prisma: PrismaService) {}
 
