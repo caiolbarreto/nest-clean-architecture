@@ -39,3 +39,7 @@ lerna-debug.log*
 
 # Data
 data
+
+# JWT KEYS
+private-key.pem
+public-key.pem
