@@ -1,7 +1,7 @@
-import { Controller, Query, UseGuards, Get } from "@nestjs/common";
-import { JwtAuthGuard } from "@/auth/jwt-auth.guard";
-import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
-import { PrismaService } from "@/prisma/prisma.service";
+import { Controller, Query, UseGuards, Get } from '@nestjs/common'
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
+import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { PrismaService } from '@/prisma/prisma.service'
 import { z } from 'zod'
 
 const pageQueryParamSchema = z
@@ -28,8 +28,8 @@ export class FetchRecentQuestionsController {
       take: perPage,
       skip: (page - 1) * perPage,
       orderBy: {
-        createdAt: 'desc'
-      }
+        createdAt: 'desc',
+      },
     })
 
     return { questions }

@@ -1,19 +1,19 @@
-import { Body, Controller, Post, UseGuards, UsePipes } from "@nestjs/common";
-import { PrismaService } from "@/prisma/prisma.service";
+import { Body, Controller, Post, UseGuards } from '@nestjs/common'
+import { PrismaService } from '@/prisma/prisma.service'
 import { z } from 'zod'
-import { ZodValidationPipe } from "@/pipes/zod-validation-pipe";
-import { JwtAuthGuard } from "@/auth/jwt-auth.guard";
-import { UserPayload } from "@/auth/jwt.strategy";
-import { CurrentUser } from "@/auth/current-user-decorator";
+import { ZodValidationPipe } from '@/pipes/zod-validation-pipe'
+import { JwtAuthGuard } from '@/auth/jwt-auth.guard'
+import { UserPayload } from '@/auth/jwt.strategy'
+import { CurrentUser } from '@/auth/current-user-decorator'
 
 const createQuestionsSchema = z.object({
   title: z.string(),
-  content: z.string()
+  content: z.string(),
 })
 
 type CreateQuestionsSchema = z.infer<typeof createQuestionsSchema>
 
-const bodyValidationPipe = (new ZodValidationPipe(createQuestionsSchema))
+const bodyValidationPipe = new ZodValidationPipe(createQuestionsSchema)
 
 @Controller('/questions')
 @UseGuards(JwtAuthGuard)
@@ -21,7 +21,10 @@ export class CreateQuestionsController {
   constructor(private prisma: PrismaService) {}
 
   @Post()
-  async handle(@Body(bodyValidationPipe) body: CreateQuestionsSchema, @CurrentUser() user: UserPayload) {
+  async handle(
+    @Body(bodyValidationPipe) body: CreateQuestionsSchema,
+    @CurrentUser() user: UserPayload,
+  ) {
     const { title, content } = body
     const { sub } = user
 
@@ -32,8 +35,8 @@ export class CreateQuestionsController {
         title,
         content,
         slug,
-        authorId: sub
-      }
+        authorId: sub,
+      },
     })
   }
 

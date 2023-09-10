@@ -1,5 +1,5 @@
-import { PrismaClient } from "@prisma/client";
-import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common";
+import { PrismaClient } from '@prisma/client'
+import { Injectable, OnModuleDestroy, OnModuleInit } from '@nestjs/common'
 
 @Injectable()
 export class PrismaService
@@ -8,7 +8,7 @@ export class PrismaService
 {
   constructor() {
     super({
-      log: ['warn', 'error']
+      log: ['warn', 'error'],
     })
   }
 

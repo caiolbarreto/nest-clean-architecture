@@ -1,37 +1,36 @@
-import { AppModule } from "@/app.module";
-import { PrismaService } from "@/prisma/prisma.service";
-import { INestApplication } from "@nestjs/common";
-import { JwtService } from "@nestjs/jwt";
+import { AppModule } from '@/app.module'
+import { PrismaService } from '@/prisma/prisma.service'
+import { INestApplication } from '@nestjs/common'
+import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 
 describe('[POST]  Questions (E2E)', () => {
-  let app: INestApplication;
+  let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
-    })
-      .compile();
+    }).compile()
 
-    app = moduleRef.createNestApplication();
+    app = moduleRef.createNestApplication()
 
     prisma = moduleRef.get(PrismaService)
 
     jwt = moduleRef.get(JwtService)
 
-    await app.init();
-  });
+    await app.init()
+  })
 
   it('should create one question', async () => {
     const user = await prisma.user.create({
       data: {
         name: 'John Doe',
         email: 'johndoe@example.com',
-        password: '123456'
-      }
+        password: '123456',
+      },
     })
 
     const accessToken = jwt.sign({ sub: user.id })
@@ -41,16 +40,15 @@ describe('[POST]  Questions (E2E)', () => {
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
         title: 'New question',
-        content: 'Question content'
+        content: 'Question content',
       })
-
 
     expect(response.statusCode).toBe(201)
 
     const question = await prisma.question.findFirst({
       where: {
-        title: 'New question'
-      }
+        title: 'New question',
+      },
     })
 
     expect(question).toBeTruthy()
