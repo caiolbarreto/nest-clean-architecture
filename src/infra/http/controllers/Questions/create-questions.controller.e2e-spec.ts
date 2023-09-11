@@ -1,11 +1,11 @@
-import { AppModule } from '@/app.module'
-import { PrismaService } from '@/prisma/prisma.service'
+import { AppModule } from '@/infra/app.module'
+import { PrismaService } from '@/infra/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 
-describe('[GET] Questions (E2E)', () => {
+describe('[POST]  Questions (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
@@ -35,33 +35,22 @@ describe('[GET] Questions (E2E)', () => {
 
     const accessToken = jwt.sign({ sub: user.id })
 
-    await prisma.question.createMany({
-      data: [
-        {
-          title: 'New question',
-          slug: 'new-question',
-          content: 'content',
-          authorId: user.id,
-        },
-        {
-          title: 'New question2',
-          slug: 'new-question2',
-          content: 'content2',
-          authorId: user.id,
-        },
-      ],
-    })
-
     const response = await request(app.getHttpServer())
-      .get('/questions')
+      .post('/questions')
       .set('Authorization', `Bearer ${accessToken}`)
+      .send({
+        title: 'New question',
+        content: 'Question content',
+      })
 
-    expect(response.statusCode).toBe(200)
-    expect(response.body).toEqual({
-      questions: [
-        expect.objectContaining({ title: 'New question' }),
-        expect.objectContaining({ title: 'New question2' }),
-      ],
+    expect(response.statusCode).toBe(201)
+
+    const question = await prisma.question.findFirst({
+      where: {
+        title: 'New question',
+      },
     })
+
+    expect(question).toBeTruthy()
   })
 })
