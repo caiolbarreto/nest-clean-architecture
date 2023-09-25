@@ -13,7 +13,7 @@ interface AuthenticateStudentUseCaseRequest {
 type AuthenticateStudentUseCaseResponse = Either<
   WrongCredentialsError,
   {
-    access_token: string
+    accessToken: string
   }
 >
 
@@ -49,7 +49,7 @@ export class AuthenticateStudentUseCase {
     })
 
     return right({
-      access_token: accessToken,
+      accessToken,
     })
   }
 }

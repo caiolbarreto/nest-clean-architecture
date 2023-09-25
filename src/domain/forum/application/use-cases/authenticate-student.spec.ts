@@ -1,5 +1,4 @@
 import { InMemoryStudentsRepository } from 'test/repositories/in-memory-students-repository'
-import { RegisterStudentUseCase } from './register-student'
 import { FakeHasher } from 'test/criptography/fake-hasher'
 import { FakeEncrypter } from 'test/criptography/fake-enctrypter'
 import { AuthenticateStudentUseCase } from './authenticate-student'
@@ -40,7 +39,7 @@ describe('Register Student', () => {
 
     expect(result.isRight()).toBe(true)
     expect(result.value).toEqual({
-      access_token: expect.any(String),
+      accessToken: expect.any(String),
     })
   })
 })
