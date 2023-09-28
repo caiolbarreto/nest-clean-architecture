@@ -1,17 +1,17 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { QuestionAttachment } from '@/domain/forum/enterprise/entities/question-attachment'
+import { AnswerAttachment } from '@/domain/forum/enterprise/entities/answer-attachment'
 import { Attachment as PrismaAttachment } from '@prisma/client'
 
-export class PrismaQuestionAttachmentMapper {
-  static toDomain(raw: PrismaAttachment): QuestionAttachment {
-    if (!raw.questionId) {
+export class PrismaAnswerAttachmentMapper {
+  static toDomain(raw: PrismaAttachment): AnswerAttachment {
+    if (!raw.answerId) {
       throw Error('Invalid comment type')
     }
 
-    return QuestionAttachment.create(
+    return AnswerAttachment.create(
       {
         attachmentId: new UniqueEntityID(raw.id),
-        questionId: new UniqueEntityID(raw.questionId),
+        answerId: new UniqueEntityID(raw.answerId),
       },
       new UniqueEntityID(raw.id),
     )
