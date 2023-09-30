@@ -1,18 +1,14 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { AnswerComment } from '@/domain/forum/enterprise/entities/answer-comment'
-import { Comment as PrismaComment, Prisma } from '@prisma/client'
+import { Answer } from '@/domain/forum/enterprise/entities/answer'
+import { Answer as PrismaAnswer, Prisma } from '@prisma/client'
 
-export class PrismaAnswerCommentMapper {
-  static toDomain(raw: PrismaComment): AnswerComment {
-    if (!raw.answerId) {
-      throw Error('Invalid comment type')
-    }
-
-    return AnswerComment.create(
+export class PrismaAnswerMapper {
+  static toDomain(raw: PrismaAnswer): Answer {
+    return Answer.create(
       {
-        authorId: new UniqueEntityID(raw.authorId),
-        answerId: new UniqueEntityID(raw.answerId),
         content: raw.content,
+        authorId: new UniqueEntityID(raw.authorId),
+        questionId: new UniqueEntityID(raw.questionId),
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },
@@ -20,16 +16,14 @@ export class PrismaAnswerCommentMapper {
     )
   }
 
-  static toPrisma(
-    answerComment: AnswerComment,
-  ): Prisma.CommentUncheckedCreateInput {
+  static toPrisma(answer: Answer): Prisma.AnswerUncheckedCreateInput {
     return {
-      id: answerComment.id.toString(),
-      authorId: answerComment.authorId.toString(),
-      answerId: answerComment.answerId.toString(),
-      content: answerComment.content,
-      createdAt: answerComment.createdAt,
-      updatedAt: answerComment.updatedAt,
+      id: answer.id.toString(),
+      authorId: answer.authorId.toString(),
+      questionId: answer.questionId.toString(),
+      content: answer.content,
+      createdAt: answer.createdAt,
+      updatedAt: answer.updatedAt,
     }
   }
 }
