@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 
-describe('[GET] Questions (E2E)', () => {
+describe('[GET] Question by slug (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
@@ -24,7 +24,7 @@ describe('[GET] Questions (E2E)', () => {
     await app.init()
   })
 
-  it('should get the recent questions', async () => {
+  it('should get the question by slug', async () => {
     const user = await prisma.user.create({
       data: {
         name: 'John Doe',
@@ -35,33 +35,22 @@ describe('[GET] Questions (E2E)', () => {
 
     const accessToken = jwt.sign({ sub: user.id })
 
-    await prisma.question.createMany({
-      data: [
-        {
-          title: 'New question',
-          slug: 'new-question',
-          content: 'content',
-          authorId: user.id,
-        },
-        {
-          title: 'New question2',
-          slug: 'new-question2',
-          content: 'content2',
-          authorId: user.id,
-        },
-      ],
+    await prisma.question.create({
+      data: {
+        title: 'New question',
+        slug: 'new-question',
+        content: 'content',
+        authorId: user.id,
+      },
     })
 
     const response = await request(app.getHttpServer())
-      .get('/questions')
+      .get('/questions/new-question')
       .set('Authorization', `Bearer ${accessToken}`)
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({
-      questions: [
-        expect.objectContaining({ title: 'New question' }),
-        expect.objectContaining({ title: 'New question2' }),
-      ],
+      question: expect.objectContaining({ title: 'New question' }),
     })
   })
 })
