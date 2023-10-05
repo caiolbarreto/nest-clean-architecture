@@ -6,7 +6,7 @@ import { PrismaService } from '../prisma.service'
 import { PrismaAnswerCommentMapper } from '../mappers/prisma-answer-comment-mapper'
 
 @Injectable()
-export class PrismaAnswersCommentsRepository
+export class PrismaAnswerCommentsRepository
   implements AnswerCommentsRepository
 {
   constructor(private prisma: PrismaService) {}
