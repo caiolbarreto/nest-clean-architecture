@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { CreateAccountController } from './controllers/Account/create-account.controller'
 import { AuthController } from './controllers/Auth/auth.controller'
-import { CreateQuestionsController } from './controllers/Questions/create-questions.controller'
+import { CreateQuestionsController } from './controllers/Questions/create-question.controller'
 import { FetchRecentQuestionsController } from './controllers/Questions/fetch-recent-questions.controller'
 import { DatabaseModule } from '../database/database.module'
 import { CreateQuestionUseCase } from '@/domain/forum/application/use-cases/create-question'
@@ -11,8 +11,10 @@ import { AuthenticateStudentUseCase } from '@/domain/forum/application/use-cases
 import { CryptographyModule } from '../cryptography/cryptography-module'
 import { GetQuestionsBySlugController } from './controllers/Questions/get-question-by-slug.controller'
 import { GetQuestionBySlugUseCase } from '@/domain/forum/application/use-cases/get-question-by-slug'
-import { EditQuestionsController } from './controllers/Questions/edit-questions.controller'
+import { EditQuestionController } from './controllers/Questions/edit-question.controller'
 import { EditQuestionUseCase } from '@/domain/forum/application/use-cases/edit-question'
+import { DeleteQuestionController } from './controllers/Questions/delete-question.controller'
+import { DeleteQuestionUseCase } from '@/domain/forum/application/use-cases/delete-question'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -22,7 +24,8 @@ import { EditQuestionUseCase } from '@/domain/forum/application/use-cases/edit-q
     CreateQuestionsController,
     FetchRecentQuestionsController,
     GetQuestionsBySlugController,
-    EditQuestionsController,
+    EditQuestionController,
+    DeleteQuestionController,
   ],
   providers: [
     CreateQuestionUseCase,
@@ -31,6 +34,7 @@ import { EditQuestionUseCase } from '@/domain/forum/application/use-cases/edit-q
     AuthenticateStudentUseCase,
     GetQuestionBySlugUseCase,
     EditQuestionUseCase,
+    DeleteQuestionUseCase,
   ],
 })
 export class HttpModule {}

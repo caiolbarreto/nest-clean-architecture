@@ -22,7 +22,7 @@ type EditQuestionsSchema = z.infer<typeof editQuestionsSchema>
 const bodyValidationPipe = new ZodValidationPipe(editQuestionsSchema)
 
 @Controller('/questions/:id')
-export class EditQuestionsController {
+export class EditQuestionController {
   constructor(private editQuestion: EditQuestionUseCase) {}
 
   @Put()
