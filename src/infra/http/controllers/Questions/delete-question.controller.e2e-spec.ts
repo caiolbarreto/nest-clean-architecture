@@ -8,7 +8,7 @@ import request from 'supertest'
 import { QuestionFactory } from 'test/factories/make-question'
 import { StudentFactory } from 'test/factories/make-student'
 
-describe('[DELETE]  Questions (E2E)', () => {
+describe('[DELETE] Questions (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let studentFactory: StudentFactory
@@ -48,8 +48,6 @@ describe('[DELETE]  Questions (E2E)', () => {
       .delete(`/questions/${questionId}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send()
-
-    console.log('response aqui', response.statusCode)
 
     expect(response.statusCode).toBe(204)
 
