@@ -32,7 +32,7 @@ describe('[GET] Question Answers (E2E)', () => {
     await app.init()
   })
 
-  it('should the answer of one question', async () => {
+  it('should get all the answers to a question', async () => {
     const user = await studentFactory.makePrismaStudent()
 
     const accessToken = jwt.sign({ sub: user.id.toString() })

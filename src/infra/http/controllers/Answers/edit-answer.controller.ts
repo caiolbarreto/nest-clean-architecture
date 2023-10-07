@@ -20,7 +20,7 @@ type EditAnswerSchema = z.infer<typeof editAnswerSchema>
 
 const bodyValidationPipe = new ZodValidationPipe(editAnswerSchema)
 
-@Controller('/answer/:id')
+@Controller('/answers/:id')
 export class EditAnswerController {
   constructor(private editAnswer: EditAnswerUseCase) {}
 
