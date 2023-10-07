@@ -27,9 +27,9 @@ export class PrismaAnswersRepository implements AnswersRepository {
     questionId: string,
     { page }: PaginationParams,
   ): Promise<Answer[]> {
-    const answer = await this.prisma.answer.findMany({
+    const answers = await this.prisma.answer.findMany({
       where: {
-        id: questionId,
+        questionId,
       },
       orderBy: {
         createdAt: 'desc',
@@ -38,7 +38,7 @@ export class PrismaAnswersRepository implements AnswersRepository {
       skip: (page - 1) * 20,
     })
 
-    return answer.map(PrismaAnswerMapper.toDomain)
+    return answers.map(PrismaAnswerMapper.toDomain)
   }
 
   async create(answer: Answer): Promise<void> {
