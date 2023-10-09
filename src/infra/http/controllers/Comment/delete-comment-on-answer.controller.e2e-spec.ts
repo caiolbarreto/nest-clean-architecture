@@ -65,8 +65,6 @@ describe('[DELETE] Answer comment (E2E)', () => {
 
     const answerCommentId = answerComment.id.toString()
 
-    console.log('testing here', answer, answerComment)
-
     const response = await request(app.getHttpServer())
       .delete(`/answers/comments/${answerCommentId}`)
       .set('Authorization', `Bearer ${accessToken}`)

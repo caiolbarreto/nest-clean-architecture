@@ -23,8 +23,6 @@ export class ChooseQuestionBestAnswerController {
   ) {
     const userId = user.sub
 
-    console.log('id aqui', answerId)
-
     const result = await this.chooseQuestionBestAnswer.execute({
       authorId: userId,
       answerId,
