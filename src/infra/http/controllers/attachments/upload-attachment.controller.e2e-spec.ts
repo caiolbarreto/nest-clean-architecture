@@ -1,15 +1,13 @@
 import { AppModule } from '@/infra/app.module'
 import { DatabaseModule } from '@/infra/database/database.module'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { StudentFactory } from 'test/factories/make-student'
 
-describe('[POST] Questions (E2E)', () => {
+describe('[POST] Upload Attachment (E2E)', () => {
   let app: INestApplication
-  let prisma: PrismaService
   let studentFactory: StudentFactory
   let jwt: JwtService
 
@@ -21,8 +19,6 @@ describe('[POST] Questions (E2E)', () => {
 
     app = moduleRef.createNestApplication()
 
-    prisma = moduleRef.get(PrismaService)
-
     studentFactory = moduleRef.get(StudentFactory)
 
     jwt = moduleRef.get(JwtService)
@@ -30,27 +26,16 @@ describe('[POST] Questions (E2E)', () => {
     await app.init()
   })
 
-  it('should create one question', async () => {
+  it('should upload an attachment', async () => {
     const user = await studentFactory.makePrismaStudent()
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
     const response = await request(app.getHttpServer())
-      .post('/questions')
+      .post('/attachments')
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        title: 'New question',
-        content: 'Question content',
-      })
+      .attach('file', './test/e2e/sample-upload.png')
 
     expect(response.statusCode).toBe(201)
-
-    const question = await prisma.question.findFirst({
-      where: {
-        title: 'New question',
-      },
-    })
-
-    expect(question).toBeTruthy()
   })
 })
