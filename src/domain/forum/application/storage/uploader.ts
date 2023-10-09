@@ -1,4 +1,4 @@
-interface UploadProps {
+export interface UploadProps {
   fileName: string
   fileType: string
   body: Buffer
