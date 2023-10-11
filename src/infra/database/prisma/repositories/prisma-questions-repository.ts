@@ -71,14 +71,14 @@ export class PrismaQuestionsRepository implements QuestionsRepository {
     await Promise.all([
       this.prisma.question.update({
         where: {
-          id: data.id,
+          id: question.id.toString(),
         },
         data,
       }),
       this.questionAttachmentsRepository.createMany(
         question.attachments.getNewItems(),
       ),
-      this.questionAttachmentsRepository.createMany(
+      this.questionAttachmentsRepository.deleteMany(
         question.attachments.getRemovedItems(),
       ),
     ])

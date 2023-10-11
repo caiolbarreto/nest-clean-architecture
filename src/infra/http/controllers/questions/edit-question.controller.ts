@@ -15,6 +15,7 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 const editQuestionsSchema = z.object({
   title: z.string(),
   content: z.string(),
+  attachments: z.array(z.string().uuid()),
 })
 
 type EditQuestionsSchema = z.infer<typeof editQuestionsSchema>
@@ -32,14 +33,14 @@ export class EditQuestionController {
     @CurrentUser() user: UserPayload,
     @Param('id') questionId: string,
   ) {
-    const { title, content } = body
+    const { title, content, attachments } = body
     const userId = user.sub
 
     const result = await this.editQuestion.execute({
       title,
       content,
       authorId: userId,
-      attachmentsIds: [],
+      attachmentsIds: attachments,
       questionId,
     })
 

@@ -52,17 +52,17 @@ describe('[POST] Questions (E2E)', () => {
 
     expect(response.statusCode).toBe(201)
 
-    const questionOnDataBase = await prisma.question.findFirst({
+    const questionOnDatabase = await prisma.question.findFirst({
       where: {
         title: 'New question',
       },
     })
 
-    expect(questionOnDataBase).toBeTruthy()
+    expect(questionOnDatabase).toBeTruthy()
 
     const attachmentsOnDatabase = await prisma.attachment.findMany({
       where: {
-        questionId: questionOnDataBase?.id,
+        questionId: questionOnDatabase?.id,
       },
     })
 
