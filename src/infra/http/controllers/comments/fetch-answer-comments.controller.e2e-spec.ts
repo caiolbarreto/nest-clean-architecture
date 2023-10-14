@@ -41,7 +41,7 @@ describe('[GET] Answer comments (E2E)', () => {
   })
 
   it('should get all the comments from one answer', async () => {
-    const user = await studentFactory.makePrismaStudent()
+    const user = await studentFactory.makePrismaStudent({ name: 'John Doe' })
 
     const accessToken = jwt.sign({ sub: user.id.toString() })
 
@@ -75,9 +75,15 @@ describe('[GET] Answer comments (E2E)', () => {
 
     expect(response.statusCode).toBe(200)
     expect(response.body).toEqual({
-      answerComments: expect.arrayContaining([
-        expect.objectContaining({ content: 'Content 1' }),
-        expect.objectContaining({ content: 'Content 2' }),
+      comments: expect.arrayContaining([
+        expect.objectContaining({
+          content: 'Content 1',
+          author: expect.objectContaining({ name: 'John Doe' }),
+        }),
+        expect.objectContaining({
+          content: 'Content 2',
+          author: expect.objectContaining({ name: 'John Doe' }),
+        }),
       ]),
     })
   })
