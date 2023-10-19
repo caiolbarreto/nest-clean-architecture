@@ -1,7 +1,7 @@
 import { QuestionDetails } from '@/domain/forum/enterprise/entities/value-objects/question-details'
 import { AttachmentPresenter } from './attachment-presenter'
 
-export class QuestionDetailsDetailsPresenter {
+export class QuestionDetailsPresenter {
   static toHTTP(questionDetails: QuestionDetails) {
     return {
       questionId: questionDetails.questionId.toString(),
