@@ -8,10 +8,7 @@ export const envSchema = z.object({
   AWS_BUCKET_NAME: z.string(),
   AWS_SECRET_KEY_ID: z.string(),
   AWS_SECRET_ACCESS_KEY: z.string(),
-  REDIS_URL: z.string().optional(),
-  REDIS_HOST: z.string().optional(),
-  REDIS_PORT: z.coerce.number().optional(),
-  REDIS_DB: z.coerce.number().optional(),
+  REDIS_URL: z.string(),
   PORT: z.coerce.number().optional().default(3333),
 })
 
