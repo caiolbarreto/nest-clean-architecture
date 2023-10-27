@@ -42,6 +42,7 @@ import { StorageModule } from '../storage/storage.module'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/forum/application/use-cases/upload-and-create-attachment'
 import { ReadNotificationController } from './controllers/notifications/read-notification.controller'
 import { ReadNotificationUseCase } from '@/domain/notification/application/use-cases/read-notification'
+import { HomeController } from './controllers/home/home-controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -66,6 +67,7 @@ import { ReadNotificationUseCase } from '@/domain/notification/application/use-c
     FetchAnswerCommentsController,
     UploadAndCreateAttachmentController,
     ReadNotificationController,
+    HomeController,
   ],
   providers: [
     CreateQuestionUseCase,
