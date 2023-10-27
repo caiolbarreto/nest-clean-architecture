@@ -8,7 +8,7 @@ export class HomeController {
   async handle() {
     return {
       message:
-        'You can see the links to use the API in the repository link within each controller',
+        'You can see the routes to use the API in the repository link within each controller',
       link: 'https://github.com/CaiolBarreto/nest-clean-architecture',
     }
   }
